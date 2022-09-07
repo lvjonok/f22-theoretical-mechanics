@@ -158,10 +158,36 @@ First of all I decided to change the coordinate system to make the problem easie
 
 \includegraphics[width=\textwidth]{newcoordsystem.png}
 
+Let's start with point $A$:
+
+Its position can easily be described as parametric equation of a circle:
+
+\begin{align}
+    \vec{A(t)} = OA \cdot \begin{bmatrix}
+        sin{(\phi)} \\
+        cos{(\phi)}
+    \end{bmatrix}
+\end{align}
+
+Velocity can be calculated through given angular velocity:
+
+\begin{align}
+    \vec{v_A(t)} = \omega \cdot \begin{bmatrix}
+        -cos{(\phi)} \\
+        sin{(\phi)}
+    \end{bmatrix}
+\end{align}
+
+As angular acceleration is zero ($w = const$), we will have only normal acceleration:
+
+\begin{align}
+    \vec{a_A(t)} = \vec{\omega} \times ( \vec{\omega} \times \vec{A(t)} )
+\end{align}
+
 Now we can describe point $B$ depending on input angle $\phi$:
 
 \begin{align}
-    B = \begin{bmatrix}
+    \vec{B} = \begin{bmatrix}
         PB - OP \cdot \cos{\frac{\pi}{3}} \\
         OP \cdot \cos{\frac{\pi}{3}}
     \end{bmatrix} = \
@@ -283,7 +309,7 @@ These equations mainly give us everything to find required variables:
     \frac{R_2}{r_1} \cdot \frac{R_3}{r_2} \cdot \frac{3t^2 - 6}{r_3} \cdot {R_1}
 \end{align}
 
-At time $t = 2$ we have: $v_A(t) = \frac{8}{2} \cdot \frac{16}{6} \cdot \frac{6}{12} \cdot 4 = \frac{64}{3} \approx 21.33$
+At time $t = 2$ we have: $v_A(2) = \frac{8}{2} \cdot \frac{16}{6} \cdot \frac{6}{12} \cdot 4 = \frac{64}{3} \approx 21.33$
 
 2. Velocity of point $C$ (on outer radius of the wheel $\implies$ uses $R_3$):
 
@@ -291,7 +317,7 @@ At time $t = 2$ we have: $v_A(t) = \frac{8}{2} \cdot \frac{16}{6} \cdot \frac{6}
     v_C(t) = \omega_3(t) \cdot R_3 = \frac{3t^2 - 6}{r_3} \cdot {R_3}
 \end{align}
 
-At time $t = 2$ we have: $v_C(t) = \frac{6}{12} \cdot 4 = \frac{24}{3} = 8$
+At time $t = 2$ we have: $v_C(2) = \frac{6}{12} \cdot 4 = \frac{24}{3} = 8$
 
 3. Angular acceleration of $3_{rd}$ wheel.
 
@@ -299,7 +325,7 @@ At time $t = 2$ we have: $v_C(t) = \frac{6}{12} \cdot 4 = \frac{24}{3} = 8$
     \epsilon_3(t) = \dv{w_3(t)}{t} = \frac{6t}{r_3}
 \end{align}
 
-At time $t = 2$ we have: $\epsilon_3(t) = \frac{12}{12} = 1$
+At time $t = 2$ we have: $\epsilon_3(2) = \frac{12}{12} = 1$
 
 4. Acceleration of B:
 
@@ -348,9 +374,9 @@ At time $t = 2$ we have:
 \begin{enumerate}
     \item \colorbox{green}{$v_A(2) = \frac{64}{3} \approx 21.33$}
     \item \colorbox{green}{$v_C(2) = 8$}
-    \item \colorbox{green}{$\epsilon_3(2) = 1$}
-    \item \colorbox{green}{$a_{B\tau}(2) = \frac{64}{3}$}
-    \item \colorbox{green}{$a_{Bn}(2) = \frac{128}{9}$}
+    \item \colorbox{green}{$\epsilon_3(2) = 1$ }
+    \item \colorbox{green}{$a_{B\tau}(2) = \frac{64}{3}$ (tangent to outer radius of $2nd$ wheel)}
+    \item \colorbox{green}{$a_{Bn}(2) = \frac{128}{9}$ (normal to outer radius of $2nd$ wheel)}
     \item \colorbox{green}{$a_{B}(2) = 25.64$}
     \item \colorbox{green}{$a_{4}(2) = 42.67$}
 \end{enumerate}
