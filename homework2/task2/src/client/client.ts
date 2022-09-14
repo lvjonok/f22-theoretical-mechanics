@@ -74,6 +74,8 @@ let prevModel: Model | undefined = undefined;
 
 var visualModel: ModelVisualization;
 
+const timeDiv = document.querySelector("#time") as HTMLDivElement;
+
 function animate() {
   if (!prevModel) {
     visualModel ? visualModel.remove(scene) : null;
@@ -82,10 +84,11 @@ function animate() {
   requestAnimationFrame(animate);
 
   curTime = Date.now();
-  const timeDelta = (curTime - startTime) / 10000.0; // in seconds
+  const timeDelta = (curTime - startTime) / 10000.0; // in seconds, but 10x slower
+  timeDiv.textContent = `time: ${timeDelta.toFixed(3)}s`;
 
   console.log(timeDelta);
-  if (timeDelta > 2.0) {
+  if (timeDelta > 10.0) {
     startTime = Date.now();
     prevModel = undefined;
     return;
@@ -107,10 +110,6 @@ function animate() {
   updateLabel(Zhelper, divZ, camera, canvas);
 
   render();
-}
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function render() {
