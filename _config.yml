@@ -26,7 +26,7 @@ baseurl: "/f22-theoretical-mechanics" # the subpath of your site, e.g. /blog
 url: "https://lvjonok.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: lvjonok
 markdown: kramdown
-remote_theme: minima
+remote_theme: benbalter/retlab
 
 # Build settings
 theme: minima
