@@ -22,8 +22,8 @@ title: f22-theoretical-mechanics
 email: kozlov.l.a10@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Materials for the course "Theoretical Mechanics" at F22 at Innopolis University.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/f22-theoretical-mechanics" # the subpath of your site, e.g. /blog
+url: "https://lvjonok.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: lvjonok
 markdown: kramdown
 remote_theme: minima
