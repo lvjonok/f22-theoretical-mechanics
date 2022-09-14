@@ -1,0 +1,147 @@
+\section{Task 2}
+
+\subsection{Derivation of angle of rotation around $Z$}
+
+As $\omega_1$ and $\epsilon_1$ are given, we can convert them to $\phi(t)$:
+\begin{align}
+    \phi(t) = \phi_0 + \omega_1 \cdot t + \epsilon_1 \cdot \frac{t^2}{2}
+\end{align}
+This angle will determine the angle of rotation of cone $A$ axis around $Z$ axis.
+
+\subsection{Calculating axes of cones}
+
+\begin{enumerate}
+    \item For simplifications in simulation, I introduced several unit vectors for initial position.
+    \item Cone $A$ axis (direction from base of cone to its vertex):
+          \begin{align}
+              \vec{u_A} = \begin{bmatrix}
+                  0                                     \\
+                  -\cos{\frac{ \alpha_B - \alpha_A}{2}} \\
+                  -\sin{\frac{\alpha_B - \alpha_A}{2}}
+              \end{bmatrix}
+          \end{align}
+    \item $IC$ axis:
+          \begin{enumerate}
+              \item $IC$ axis is axis of intersection between cone $A$ and cone $B$ because $B$ is static and $A$ moves without slippering.
+              \item All velocities of the points in $A$ can easily be found using $IC$ axis.
+              \item It is kinda obvious that this axis will be rotated around $Z$ axis with angle $\phi(t)$ together will cone $A$.
+              \item It is enough to calculate initial vector and then rotate it around $Z$ axis.
+          \end{enumerate}
+          \begin{align}
+              \vec{u_{IC}} = \begin{bmatrix}
+                  0                    \\
+                  \sin({\alpha_B / 2}) \\
+                  \cos({\alpha_B / 2})
+              \end{bmatrix}
+          \end{align}
+    \item Radius of cone $A$ axis:
+          \begin{enumerate}
+              \item I needed this unit vector to calculate position of point $M$ as it is simplier to split transformation on parts and then combine them.
+              \item It is simply cone $A$ axis rotated by $90\deg$ around $X$ axis.
+          \end{enumerate}
+          \begin{align}
+              \vec{u_{rA}} = \begin{bmatrix}
+                  0                     \\
+                  -\sin({\alpha_A / 2}) \\
+                  \cos({\alpha_A / 2})
+              \end{bmatrix}
+          \end{align}
+\end{enumerate}
+
+\subsection{Angular velocity of cone $A$}
+
+\begin{enumerate}
+    \item Let state radius of cone $A$:
+          \begin{align}
+              r_A = OM_0 \sin({\alpha_A / 2})
+          \end{align}
+    \item It is widely known formula for velocity: $\vec{v} = \vec{\omega} \times \vec{r}$.
+    \item I discovered, that we can do reverse: $\vec{\omega} = \frac{\vec{r} \times \vec{v}}{||\vec{r}||^2}$ \href{https://www.omnicalculator.com/physics/angular-velocity}{source}.
+    \item In our case it would be radius vector from  cone $A$ center axis to $IC$ axis.
+          \begin{align}
+              \vec{r}_{centerA} = r_A \cdot  R_z(\phi) \cdot \vec{u_{A}}            \\
+              \vec{r} = \vec{r}_{centerA} - OM_0 \cdot R_z(\phi) \cdot \vec{u_{rA}} \\
+              \vec{v} = \dot{\vec{r}}_{centerA}                                     \\
+              \vec{\omega} = \frac{\vec{r} \times \vec{v}}{||\vec{r}||^2}
+          \end{align}
+
+\end{enumerate}
+
+\subsection{Angular acceleration of cone $A$}
+
+Without many words:
+
+\begin{align}
+    \vec{\epsilon} = \dot{\vec{\omega}}
+\end{align}
+
+\subsection{Position of point $M$}
+
+\begin{enumerate}
+    \item We know that point $M$ lies on the base of cone $A$
+    \item That means we can find its position by first tranforming from origin to center of base of cone $A$ and then rotating it around cone $A$ axis on required angle.
+    \item Firstly, I needed to find the angle on which point $M$ should be rotated.
+          Imagine that circumference of cone $B$ is flattened into the line. Then rotation of cone $A$ on cone $B$ is like the wheel with radius of cone $A$ is rotating on the line.
+          \begin{align}
+              \theta_A = \frac{OM_0 \cdot \phi }{OM_0 \cdot \sin({\alpha_A / 2})} =\
+              \frac{\phi }{\sin({\alpha_A / 2})}
+          \end{align}
+          This angle determines rotation of $u_{rA}$ around $u_A$.
+    \item Then we can find position of point $M$:
+          \begin{align}
+              \vec{r}_{M} = \vec{r}_{centerA} + R_z(\phi) \cdot R_{u_A}(\theta_A) \cdot \vec{u}_{rA}
+          \end{align}
+\end{enumerate}
+
+\subsection{Velocity and accelerationi of point $M$}
+
+\begin{enumerate}
+    \item Velocity of point $M$:
+          \begin{align}
+              \vec{v}_{M} = \dot{\vec{r}}_{M}
+          \end{align}
+    \item Acceleration of point $M$:
+          \begin{align}
+              \vec{a}_{M} = \dot{\vec{v}}_{M}
+          \end{align}
+    \item Tangential acceleration of point $M$:
+          \begin{align}
+              \vec{a}_{tM} = \vec{a}_{M} - \vec{v}_{M} \cdot \frac{\vec{v}_{M}}{||\vec{v}_{M}||}
+          \end{align}
+
+\end{enumerate}
+
+
+\begin{answer}
+    \subsection*{Answer:}
+    \begin{enumerate}
+        \item Angular velocity of cone $A$:
+              \begin{align*}
+                  \vec{r}_{centerA} = r_A \cdot  R_z(\phi) \cdot \vec{u_{A}}            \\
+                  \vec{r} = \vec{r}_{centerA} - OM_0 \cdot R_z(\phi) \cdot \vec{u_{rA}} \\
+                  \vec{v} = \dot{\vec{r}}_{centerA}                                     \\
+                  \vec{\omega} = \frac{\vec{r} \times \vec{v}}{||\vec{r}||^2}
+              \end{align*}
+        \item Angular acceleration of cone $A$:
+              \begin{align*}
+                  \vec{\epsilon} = \dot{\vec{\omega}}
+              \end{align*}
+        \item Position of point $M$:
+              \begin{align*}
+                  \vec{u_{rA}} = \begin{bmatrix}
+                      0                     \\
+                      -\sin({\alpha_A / 2}) \\
+                      \cos({\alpha_A / 2})
+                  \end{bmatrix} \\
+                  \vec{r}_{M} = \vec{r}_{centerA} + R_z(\phi) \cdot R_{u_A}(\theta_A) \cdot \vec{u}_{rA}
+              \end{align*}
+        \item Velocity of point $M$:
+              \begin{align*}
+                  \vec{v}_{M} = \dot{\vec{r}}_{M}
+              \end{align*}
+        \item Acceleration of point $M$:
+              \begin{align*}
+                  \vec{a}_{M} = \dot{\vec{v}}_{M}
+              \end{align*}
+    \end{enumerate}
+\end{answer}

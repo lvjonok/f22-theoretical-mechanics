@@ -31,6 +31,8 @@ export class Vector extends Object3D {
     );
 
     this.add(this.line);
+    this.setOrigin(origin);
+    this.setEnd(end);
   }
 
   setOrigin(origin: Vector3) {

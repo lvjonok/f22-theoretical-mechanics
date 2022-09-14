@@ -1,8 +1,8 @@
 import * as THREE from "three";
-import Model, { OM0 } from "./model";
+import Model, { alphaA, OM0 } from "./model";
 import { Vector } from "./vector";
-import { coneAstartAxis } from "./model";
-import { Scene } from "three";
+import { coneAstartAxis, alphaB } from "./model";
+import { MathUtils, Scene } from "three";
 
 const tempV = new THREE.Vector3();
 
@@ -18,6 +18,10 @@ export class ModelVisualization {
   velMlabel: HTMLDivElement;
   accM: Vector;
   accMlabel: HTMLDivElement;
+  accMt: Vector;
+  accMtlabel: HTMLDivElement;
+  accMn: Vector;
+  accMnlabel: HTMLDivElement;
 
   angVelA: Vector;
   angVelAlabel: HTMLDivElement;
@@ -38,8 +42,8 @@ export class ModelVisualization {
     this.coneB = CreateCone(
       new THREE.Vector3(0, 0, 0),
       new THREE.Vector3(0, 0, -1),
-      OM0 * Math.sin(Math.PI / 3),
-      OM0 * Math.cos(Math.PI / 3)
+      OM0 * Math.sin(MathUtils.degToRad(alphaB / 2)),
+      OM0 * Math.cos(MathUtils.degToRad(alphaB / 2))
     );
     this.coneB.name = "coneB";
     scene.add(this.coneB);
@@ -47,8 +51,8 @@ export class ModelVisualization {
     this.coneA = CreateCone(
       new THREE.Vector3(0, 0, 0),
       coneAstartAxis,
-      OM0 * Math.sin((15 * Math.PI) / 180),
-      OM0 * Math.cos((15 * Math.PI) / 180),
+      OM0 * Math.sin(MathUtils.degToRad(alphaA / 2)),
+      OM0 * Math.cos(MathUtils.degToRad(alphaA / 2)),
       0xff0000
     );
     this.coneA.name = "coneA";
@@ -97,6 +101,20 @@ export class ModelVisualization {
     this.labels.appendChild(div5);
     this.angAccAlabel = div5;
 
+    this.accMt = new Vector(new THREE.Vector3(), new THREE.Vector3(), 0x00ff00);
+    scene.add(this.accMt);
+    const div6 = document.createElement("div");
+    div6.textContent = "accMt";
+    this.labels.appendChild(div6);
+    this.accMtlabel = div6;
+
+    this.accMn = new Vector(new THREE.Vector3(), new THREE.Vector3(), 0xff0000);
+    scene.add(this.accMn);
+    const div7 = document.createElement("div");
+    div7.textContent = "accMn";
+    this.labels.appendChild(div7);
+    this.accMnlabel = div7;
+
     this.updVis();
   }
 
@@ -113,6 +131,8 @@ export class ModelVisualization {
     scene.remove(this.accM);
     scene.remove(this.angVelA);
     scene.remove(this.angAccA);
+    scene.remove(this.accMt);
+    scene.remove(this.accMn);
   }
 
   // method updates positions of all objects on current model
@@ -143,23 +163,20 @@ export class ModelVisualization {
     this.angVelA.setEnd(this.model.angVelA);
     this.angAccA.setEnd(this.model.angAccA);
 
-    const updateLabel = (pos: THREE.Object3D, label: HTMLDivElement) => {
-      pos.updateWorldMatrix(true, false);
-      pos.getWorldPosition(tempV);
+    this.accMt?.setOrigin(this.model.posM);
+    this.accMt?.setEnd(this.model.posM.clone().add(this.model.accMt));
 
-      camera ? tempV.project(camera) : null;
-
-      const x = (tempV.x * 0.5 + 0.5) * canvas.clientWidth;
-      const y = (tempV.y * -0.5 + 0.5) * canvas.clientHeight;
-      label.style.transform = `translate(-50%, -50%) translate(${x}px,${y}px)`;
-    };
+    this.accMn?.setOrigin(this.model.posM);
+    this.accMn?.setEnd(this.model.posM.clone().add(this.model.accMn));
 
     if (camera) {
-      updateLabel(this.posM, this.posMlabel);
-      updateLabel(this.velM, this.velMlabel);
-      updateLabel(this.accM, this.accMlabel);
-      updateLabel(this.angVelA, this.angVelAlabel);
-      updateLabel(this.angAccA, this.angAccAlabel);
+      updateLabel(this.posM, this.posMlabel, camera, canvas);
+      updateLabel(this.velM, this.velMlabel, camera, canvas);
+      updateLabel(this.accM, this.accMlabel, camera, canvas);
+      updateLabel(this.accMt, this.accMtlabel, camera, canvas);
+      updateLabel(this.accMn, this.accMnlabel, camera, canvas);
+      updateLabel(this.angVelA, this.angVelAlabel, camera, canvas);
+      updateLabel(this.angAccA, this.angAccAlabel, camera, canvas);
     }
   }
 }
@@ -211,4 +228,20 @@ function CreatePoint(position: THREE.Vector3) {
   return new THREE.Mesh(geometry, material);
 }
 
-export { RotationFromTo, CreateCone, CreatePoint };
+const updateLabel = (
+  pos: THREE.Object3D,
+  label: HTMLDivElement,
+  camera: THREE.Camera,
+  canvas: HTMLCanvasElement
+) => {
+  pos.updateWorldMatrix(true, false);
+  pos.getWorldPosition(tempV);
+
+  camera ? tempV.project(camera) : null;
+
+  const x = (tempV.x * 0.5 + 0.5) * canvas.clientWidth;
+  const y = (tempV.y * -0.5 + 0.5) * canvas.clientHeight;
+  label.style.transform = `translate(-50%, -50%) translate(${x}px,${y}px)`;
+};
+
+export { RotationFromTo, CreateCone, CreatePoint, updateLabel };

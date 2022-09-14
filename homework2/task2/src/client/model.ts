@@ -18,13 +18,13 @@ function timeToPhi(time: number) {
 
 export const coneAstartAxis = new THREE.Vector3(
   0,
-  -Math.cos(Math.PI / 4),
-  -Math.sin(Math.PI / 4)
+  -Math.sin(MathUtils.degToRad((alphaB - alphaA) / 2)),
+  -Math.cos(MathUtils.degToRad((alphaB - alphaA) / 2))
 );
 export const coneAradiusAxis = new THREE.Vector3(
   0,
-  -Math.cos(Math.PI / 4),
-  Math.sin(Math.PI / 4)
+  coneAstartAxis.z,
+  -coneAstartAxis.y
 );
 
 export const startingICAxis = new THREE.Vector3(
@@ -50,6 +50,8 @@ export default class Model {
   posM: THREE.Vector3;
   velM: THREE.Vector3;
   accM: THREE.Vector3;
+  accMt: THREE.Vector3;
+  accMn: THREE.Vector3;
 
   constructor(timestamp: number, prev?: Model) {
     this.timestamp = timestamp;
@@ -63,7 +65,6 @@ export default class Model {
     this.centerA = this.axisA
       .clone()
       .multiplyScalar(-OM0 * Math.cos(MathUtils.degToRad(alphaA / 2)));
-    console.log("length of centerA", this.centerA.length());
     this.thetaA =
       (this.phi * OM0) / (OM0 * Math.sin(MathUtils.degToRad(alphaA / 2.0)));
     // calculate transformation for base of the rolling cone A
@@ -118,5 +119,8 @@ export default class Model {
           .sub(this.prev.angVelA)
           .multiplyScalar(1 / (this.timestamp - this.prev.timestamp))
       : new THREE.Vector3();
+
+    this.accMt = this.accM.clone().projectOnVector(this.velM);
+    this.accMn = this.accM.clone().sub(this.accMt);
   }
 }

@@ -3,8 +3,14 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{physics}
+\usepackage[most]{tcolorbox}
 \usepackage[utf8]{inputenc}
-\usepackage[dvipsnames]{xcolor}
+% \usepackage[dvipsnames]{xcolor}
+
+\definecolor{block-gray}{rgb}{0, 0.8, 0}
+\newtcolorbox{answer}{colback=block-gray,grow to right by=-10mm,grow to left by=-10mm,
+boxrule=0pt,boxsep=0pt,breakable}
+
 \graphicspath{ {images/} }
 
 \title{Homework 2}
@@ -16,5 +22,9 @@
 \maketitle
 
 \input{task1.tex}
+
+\newpage
+
+\input{task2.tex}
 
 \end{document}
