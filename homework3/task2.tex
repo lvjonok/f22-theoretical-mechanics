@@ -1,0 +1,126 @@
+\section{Task 2}
+
+\begin{enumerate}
+    \item Find derivatives of motion and angle equations:
+          Equation of motion
+          \begin{align}
+              s_r(t) = 75 \pi (0.1 t + 0.3 t^2)   \\
+              \dot{s_r}(t) = 75 \pi (0.1 + 0.6 t) \\
+              \ddot{s_r}(t) = 75 \pi (0.6)
+          \end{align}
+          Equation of angle
+          \begin{align}
+              \phi(t) = 2t - 0.3t^2    \\
+              \dot{\phi}(t) = 2 - 0.6t \\
+              \ddot{\phi}(t) = -0.6
+          \end{align}
+
+    \item Find position of points:
+          \begin{enumerate}
+              \item Point $O_1$:
+                    \begin{answer}
+                        \begin{align}
+                            \vec{r}_{O_1}(t) = \begin{bmatrix}
+                                0 \\
+                                0
+                            \end{bmatrix}
+                        \end{align}
+                    \end{answer}
+              \item Point $O$:
+                    \begin{answer}
+                        \begin{align}
+                            \vec{r}_{O_2}(t) = \sqrt{2} R \cdot \begin{bmatrix}
+                                \cos(\phi(t) + \frac{\pi}{4}) \\
+                                \sin(\phi(t) + \frac{\pi}{4})
+                            \end{bmatrix}
+                        \end{align}
+
+                    \end{answer}
+              \item Point $D$ (center of the disk):
+                    \begin{answer}
+                        \begin{align}
+                            \vec{r}_{D}(t) = R \cdot \begin{bmatrix}
+                                \cos(\phi(t) + \frac{\pi}{2}) \\
+                                \sin(\phi(t) + \frac{\pi}{2})
+                            \end{bmatrix}
+                        \end{align}
+                    \end{answer}
+              \item Let us define angle $\theta$ as angle $\angle ODM$.
+                    \begin{align}
+                        \theta(t) = \frac{s_r(t)}{R} = \frac{75 \pi (0.1 t + 0.3 t^2)}{R}
+                    \end{align}
+              \item Point $M$:
+                    \begin{answer}
+                        \begin{align}
+                            \vec{r}_{M}(t) = \vec{r}_{D}(t) + R \cdot \begin{bmatrix}
+                                \cos(\theta(t)) \\
+                                \sin(\theta(t))
+                            \end{bmatrix}
+                        \end{align}
+                    \end{answer}
+          \end{enumerate}
+    \item Velocities of $M$.
+          \begin{enumerate}
+              \item Relative velocity. (we fix the disk $\implies$ rotation around $D$)
+                    \begin{answer}
+                        \begin{align}
+                            \vec{v}^{_{rel}}_{M}(t) = \dot{\theta(t)} \times (\vec{r_M}(t) - \vec{r_D}(t))
+                        \end{align}
+                    \end{answer}
+              \item Transport velocity. (we fix the point $M$ $\implies$ rotation around $O_1$)
+                    \begin{answer}
+                        \begin{align}
+                            \vec{v}^{_{tr}}_M(t) = \dot{\vec{\phi}}(t) \times \vec{r_M}(t)
+                        \end{align}
+                    \end{answer}
+              \item Absolute velocity of point $M$.
+                    \begin{answer}
+                        \begin{align}
+                            \vec{v}_M(t) = \vec{v}^{_{rel}}_{M}(t) + \vec{v}^{_{tr}}_M(t)
+                        \end{align}
+                    \end{answer}
+          \end{enumerate}
+    \item Accelerations of $M$.
+          \begin{enumerate}
+              \item Relative acceleration (we fix the disk).
+                    \begin{answer}
+                        \begin{align}
+                            \vec{a}^{_{rel}}_{M}(t) =  \vec{a}^{_{rel}}_{M\tau}(t) + \vec{a}^{_{rel}}_{Mn}(t) = \notag \\
+                            \ddot{\vec{\theta}}(t) \times (\vec{r}_{M}(t) - \vec{r}_{D}(t)) + \notag                   \\
+                            \dot{\vec{\theta}}(t) \
+                            \times (\dot{\vec{\theta}}(t) \times (\vec{r}_{M}(t) - \vec{r}_{D}(t)))
+                        \end{align}
+                    \end{answer}
+              \item Transport acceleration (we fix the point).
+                    \begin{answer}
+                        \begin{align}
+                            \vec{a}^{_{tr}}_M(t) = \ddot{\vec{\phi}}(t) \times \vec{r}_{M}(t) + \dot{\vec{\phi}}(t) \
+                            \times (\dot{\vec{\phi}}(t) \times \vec{r}_{M}(t))
+                        \end{align}
+                    \end{answer}
+              \item Coriolis acceleration:
+                    \begin{answer}
+                        \begin{align}
+                            \vec{a}^{_{cor}}_{M}(t) = 2 \dot{\vec{\phi}}(t) \times \vec{v}^{_{rel}}_{M}(t)
+                        \end{align}
+                    \end{answer}
+              \item Absolute acceleration of point $M$.
+                    \begin{answer}
+                        \begin{align}
+                            \vec{a}_M(t) = \vec{a}^{_{rel}}_{M}(t) + \vec{a}^{_{cor}}_{M}(t) + \vec{a}^{_{tr}}_M(t)
+                        \end{align}
+                    \end{answer}
+          \end{enumerate}
+    \item Find $t$, when $M$ reaches $O$ second time.
+          \begin{answer}
+              \begin{align}
+                  \theta(t) = 2 \pi                   \notag \\
+                  0.3 t^2 + 0.1 t - \frac{2R}{75} = 0        \\
+                  t \approx 1.4781 \text{ (take positive root) } \notag
+              \end{align}
+          \end{answer}
+\end{enumerate}
+
+\subsection*{Answer}
+
+Answers were highlighted in the text with green background.
