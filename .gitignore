@@ -3,3 +3,12 @@ _site
 .jekyll-cache
 .jekyll-metadata
 vendor
+venv
+__pycache__
+.vscode
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.log
+*.gz
