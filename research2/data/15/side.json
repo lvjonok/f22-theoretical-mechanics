@@ -1,8 +1,1 @@
-{
-  "start_frame": 402.0,
-  "end_frame": 2901.0,
-  "roi": [
-    [850, 40],
-    [609, 540]
-  ]
-}
+{"start_frame": 402.0, "end_frame": 2901.0, "roi": [[850, 40], [609, 540]], "l": 20.0, "oscillations": 20, "max-stretch": 8.873}
