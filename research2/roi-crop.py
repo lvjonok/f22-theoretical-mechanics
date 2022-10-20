@@ -3,10 +3,11 @@ import json
 import os
 
 
-for experiment in range(16):
+for experiment in [13]:
+    print(f"Doint experiment {experiment}")
     data_path = f"data/{experiment}/side.json"
-    video_path = f"data/{experiment}/side_crop.mp4"
-    new_video_path = f"data/{experiment}/side_roi.mp4"
+    video_path = f"data/{experiment}/side_cropped.MOV"
+    new_video_path = f"data/{experiment}/side_roi.MOV"
 
     data = json.load(open(data_path))
 

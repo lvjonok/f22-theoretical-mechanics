@@ -2,10 +2,10 @@ import json
 import cv2
 import numpy as np
 
-experiment = 15
+experiment = 13
 
 cap = cv2.VideoCapture(f'data/{experiment}/side.MOV')
-out_path = f'data/{experiment}/side.json'
+out_path = f'data/{experiment}/side_new.json'
 
 start = 0
 finish = 0
