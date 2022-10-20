@@ -212,6 +212,10 @@ for experiment in range(16):
     # pyplot clear plot
     plt.clf()
 
+    plt.xlabel('Time (s)')
+    plt.ylabel('Length (cm)')
+    plt.title(f'Experiment {experiment}, rope length {sidedata["l"]} cm')
+
     plt.plot(values[:, 0], values[:, 1], label="simulation others")
     plt.plot(values2[0], np.array(values2[1]) * 100.0, label="simulation ours")
     plt.plot(time, posy, label="real")

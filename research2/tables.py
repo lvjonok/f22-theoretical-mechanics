@@ -2,6 +2,8 @@ import json
 import numpy as np
 import pandas as pd
 
+import matplotlib.pyplot as plt
+
 datas = []
 
 for experiment in range(16):
@@ -9,23 +11,38 @@ for experiment in range(16):
 
     datas.append(data)
 
+
 # create dataframe from list of dicts
-df = pd.DataFrame(datas).loc[:, ['l', 'oscillations', 'max-stretch']]
+df = pd.DataFrame(datas)
 
-# group by l and join oscillations
-df = df.groupby('l').agg(
-    {'oscillations': lambda x: list(x), 'max-stretch': lambda x: list(x)})
+# create a new column with experiments from index
+df['experiments'] = df.index
 
-# add mean and std columns
-df['osc-mean'] = df['oscillations'].apply(np.mean)
-df['osc-std'] = df['oscillations'].apply(np.std)
 
-df['stretch-mean'] = df['max-stretch'].apply(np.mean)
-df['stretch-std'] = df['max-stretch'].apply(np.std)
+# aggregate data by l, join indices
+df = df.groupby('l').agg({'experiments': lambda x: list(x)})
 
-# df is 1st table from assignment
+# iterate through l values
+for l, experiments in df.iterrows():
+    print(l, experiments)
+    # plot experiments
+    plt.clf()
 
-print(df.loc[:, ['oscillations', 'osc-mean', 'osc-std']].head().to_markdown())
+    plt.title(f"Rope length {l} cm")
 
-print(df.loc[:, ['max-stretch', 'stretch-mean',
-      'stretch-std']].head().to_markdown())
+    for experiment in experiments['experiments']:
+        print(experiment)
+        # load data for experiment 0
+        posy = np.array(json.load(open(f"data/{experiment}/poscm.json")))
+        time = np.array(json.load(open(f"data/{experiment}/time.json")))
+
+        posy = posy[: len(time)]
+
+        plt.xlabel("Time (s)")
+        plt.ylabel("Position (cm)")
+
+        # plot posy
+        plt.plot(time, posy, label=f"Experiment {experiment}")
+
+    plt.legend()
+    plt.savefig(f"reportimages/raw_{l}.png")
