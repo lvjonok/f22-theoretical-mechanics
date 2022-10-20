@@ -24,6 +24,7 @@ for experiment in range(16):
 
     posy = []
     posx = []
+    timestamps = []
 
     while True:
         ret, frame = cap.read()
@@ -49,6 +50,10 @@ for experiment in range(16):
 
             posy.append(cy)
             posx.append(cx)
+
+            # get current timestamp
+            timestamp = cap.get(cv2.CAP_PROP_POS_MSEC) / 1000
+            timestamps.append(timestamp)
         except:
             # print(f'Experiment {experiment} failed')
             posy.append(None)
@@ -73,6 +78,12 @@ for experiment in range(16):
 
     posy = [x if x else -1 for x in posy]
 
+    # drop last values if they are 0 for timestamp
+    while timestamps[-1] == 0:
+        timestamps.pop()
+        posy.pop()
+        posx.pop()
+
     # save posy to file
     with open(f"data/{experiment}/posy.json", "w") as f:
         json.dump(posy, f)
@@ -81,11 +92,14 @@ for experiment in range(16):
     with open(f"data/{experiment}/posx.json", "w") as f:
         json.dump(posx, f)
 
+    with open(f"data/{experiment}/time.json", "w") as f:
+        json.dump(timestamps, f)
+
     # erase plot
     plt.clf()
 
     # plot posy
-    plt.plot(posy)
+    plt.plot(timestamps, posy)
 
     plt.savefig(f"data/{experiment}/posy.png")
 
@@ -93,6 +107,6 @@ for experiment in range(16):
     plt.clf()
 
     # plot posx
-    plt.plot(posx)
+    plt.plot(timestamps, posx)
 
     plt.savefig(f"data/{experiment}/posx.png")
